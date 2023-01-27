@@ -5,9 +5,15 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold">Data Pegawai</h6>
-        <a href="index.php?halaman=tambah-pegawai" class="btn btn-success">
-            <i class="fas fa-plus"></i> Tambah
-        </a>
+        <?php
+        if ($user['level'] == 1) {
+        ?>
+            <a href="index.php?halaman=tambah-pegawai" class="btn btn-success">
+                <i class="fas fa-plus"></i> Tambah
+            </a>
+        <?php
+        }
+        ?>
     </div>
     <div class="card-body">
 
@@ -23,13 +29,13 @@
                         <th>Status</th>
                         <th>Jabatan</th>
                         <th>Bagian</th>
-                        <th>Aksi</th>
+                        <th width="60px">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     $no = 1;
-                    $query = mysqli_query($koneksi, "SELECT*FROM pegawai");
+                    $query = mysqli_query($koneksi, "SELECT*FROM pegawai JOIN bagian ON pegawai.id_bagian = bagian.id_bagian");
                     while ($data = mysqli_fetch_assoc($query)) {
                     ?>
                         <tr>
@@ -40,14 +46,20 @@
                             <td><?= $data['alamat'] ?></td>
                             <td><?= $data['status'] ?></td>
                             <td><?= $data['jabatan'] ?></td>
-                            <td><?= $data['bagian'] ?></td>
+                            <td><?= $data['nama_bagian'] ?></td>
                             <td>
-                                <a href="index.php?halaman=ubah-pegawai&nip=<?= $data['nip'] ?>">
-                                    <button class="btn btn-warning btn-sm"><i class="fa fa-pencil-alt"></i></button>
-                                </a>
-                                <a href="./proses/proses_pegawai.php?aksi=hapus&nip=<?= $data['nip'] ?>">
-                                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-                                </a>
+                                <?php
+                                if ($user['level'] == 1) {
+                                ?>
+                                    <a href="index.php?halaman=ubah-pegawai&nip=<?= $data['nip'] ?>">
+                                        <button class="btn btn-warning btn-sm"><i class="fa fa-pencil-alt"></i></button>
+                                    </a>
+                                    <a href="./proses/proses_pegawai.php?aksi=hapus&nip=<?= $data['nip'] ?>">
+                                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                    </a>
+                                <?php
+                                }
+                                ?>
                             </td>
                         </tr>
                     <?php

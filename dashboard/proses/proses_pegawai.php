@@ -33,6 +33,8 @@ if ($_GET['aksi'] == 'tambah') {
         $_SESSION['toast_type'] = 'success';
         $_SESSION['toast_message'] = 'Tambah data pegawai berhasil.';
         header('location:../index.php?halaman=pegawai');
+    } else {
+        echo mysqli_error($koneksi);
     }
 }
 
@@ -45,12 +47,14 @@ if ($_GET['aksi'] == 'ubah') {
     $jabatan = $_POST['jabatan'];
     $bagian = $_POST['bagian'];
 
-    $query = mysqli_query($koneksi, "UPDATE pegawai set nama='$nama', jenis_kelamin='$jenis_kelamin', alamat='$alamat', status='$status', jabatan='$jabatan', bagian='$bagian' WHERE nip='$nip'");
+    $query = mysqli_query($koneksi, "UPDATE pegawai set nama_pegawai='$nama', jenis_kelamin='$jenis_kelamin', alamat='$alamat', status='$status', jabatan='$jabatan', id_bagian='$bagian' WHERE nip='$nip'");
 
     if ($query) {
         $_SESSION['toast_type'] = 'success';
         $_SESSION['toast_message'] = 'Ubah data pegawai berhasil.';
         header('location:../index.php?halaman=pegawai');
+    } else {
+        echo mysqli_error($koneksi);
     }
 }
 

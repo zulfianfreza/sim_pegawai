@@ -8,6 +8,13 @@ if ($_GET['aksi'] == 'tambah') {
     $kriteria = $_POST['kriteria'];
     $bobot = $_POST['bobot'];
 
+    if ($kode == '' or $kriteria == '' or $bobot == '') {
+        $_SESSION['toast_type'] = 'error';
+        $_SESSION['toast_message'] = 'Silahkan lengkapi semua data.';
+        header('location:../index.php?halaman=tambah-kriteria');
+        exit();
+    }
+
     $query = mysqli_query($koneksi, "SELECT*FROM kriteria where id_kriteria='$kode'");
     $check = mysqli_num_rows($query);
 

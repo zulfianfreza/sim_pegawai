@@ -55,7 +55,16 @@ $data = mysqli_fetch_assoc($query);
             </div>
             <div class="mt-3">
                 <label class="form-label">Bagian</label>
-                <input type="text" class="form-control" name="bagian" placeholder="" value="<?= $data['bagian'] ?>">
+                <select name="bagian" id="" class="form-control">
+                    <?php
+                    $query = mysqli_query($koneksi, "SELECT*FROM bagian WHERE nama_bagian!='Admin'");
+                    while ($res = mysqli_fetch_assoc($query)) {
+                    ?>
+                        <option value="<?= $res['id_bagian'] ?>" <?= $res['id_bagian'] == $data['id_bagian'] ? 'selected' : '' ?>><?= $res['nama_bagian'] ?></option>
+                    <?php
+                    }
+                    ?>
+                </select>
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end">

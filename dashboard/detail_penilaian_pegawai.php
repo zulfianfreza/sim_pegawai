@@ -16,12 +16,14 @@ $data = mysqli_fetch_assoc($query);
                 <p>NIP</p>
                 <p>Nama</p>
                 <p>Penilai</p>
+                <p>Periode</p>
                 <p>Tanggal Penilaian</p>
             </div>
             <div class="col-sm-4">
                 <p>: <?= $data['nip'] ?></p>
                 <p>: <?= $data['nama_pegawai'] ?></p>
                 <p>: <?= $data['nama'] ?></p>
+                <p>: <?= $data['periode'] . ' ' . $data['tahun'] ?></p>
                 <p>: <?= $data['tanggal'] ?></p>
             </div>
         </div>

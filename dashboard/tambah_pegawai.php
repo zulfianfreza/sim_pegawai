@@ -50,7 +50,16 @@
             </div>
             <div class="mt-3">
                 <label class="form-label">Bagian</label>
-                <input type="text" class="form-control" name="bagian" placeholder="" value="">
+                <select name="bagian" id="" class="form-control">
+                    <?php
+                    $query = mysqli_query($koneksi, "SELECT*FROM bagian");
+                    while ($data = mysqli_fetch_assoc($query)) {
+                    ?>
+                        <option value="<?= $data['id_bagian'] ?>"><?= $data['nama_bagian'] ?></option>
+                    <?php
+                    }
+                    ?>
+                </select>
             </div>
         </div>
         <div class="card-footer d-flex justify-content-end">

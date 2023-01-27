@@ -1,3 +1,7 @@
+<?php
+$status = $_GET['status'];
+?>
+
 <h1 class="h3 mb-4 text-gray-800">Penilaian</h1>
 
 <!-- DataTales Example -->
@@ -7,12 +11,41 @@
     </div>
     <form action="./proses/proses_penilaian.php?aksi=tambah" method="POST">
         <div class="card-body">
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="" class="form-label">Periode</label>
+                        <select name="periode" id="" class="form-control">
+                            <?php
+                            $bulan = array('Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
+                            for ($i = 0; $i < 12; $i++) {
+                            ?>
+                                <option value="<?= $bulan[$i] ?>" <?= $i == (date('m') - 1) ? 'selected' : '' ?>><?= $bulan[$i] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="" class="form-label">Tahun</label>
+                        <select name="tahun" id="" class="form-control">
+                            <?php $tahun_sekarang = date('Y') ?>
+                            <option value="<?= $tahun_sekarang - 1 ?>"><?= $tahun_sekarang - 1 ?></option>
+                            <option value="<?= $tahun_sekarang ?>" selected><?= $tahun_sekarang ?></option>
+                            <option value="<?= $tahun_sekarang + 1 ?>"><?= $tahun_sekarang + 1 ?></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="form-label">Pegawai</label>
                 <select name="nip" id="" class="form-control" required>
                     <option value="" disabled selected>NIP - Nama</option>
                     <?php
-                    $query = mysqli_query($koneksi, "SELECT*FROM pegawai WHERE status='Tetap'");
+                    $query = mysqli_query($koneksi, "SELECT*FROM pegawai WHERE status='$status' AND id_bagian='$user[id_bagian]'");
                     while ($data = mysqli_fetch_assoc($query)) {
                     ?>
                         <option value="<?= $data['nip'] ?>"><?= $data['nip'] . ' - ' . $data['nama_pegawai'] ?></option>

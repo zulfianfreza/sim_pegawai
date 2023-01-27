@@ -10,7 +10,8 @@ if (!isset($_SESSION['logged_in'])) {
     exit();
 }
 include '../koneksi.php';
-$halaman = $_GET['halaman'];
+$halaman = isset($_GET['halaman']) ? $_GET['halaman'] : '';
+$status = isset($_GET['status']) ? $_GET['status'] : '';
 $query = $_SESSION['login_type'] == 'user' ? mysqli_query($koneksi, "SELECT*FROM user where username='$_SESSION[username]'") : mysqli_query($koneksi, "SELECT*FROM pegawai where nip='$_SESSION[nip]'");
 $user = mysqli_fetch_assoc($query);
 ?>
@@ -31,6 +32,14 @@ $user = mysqli_fetch_assoc($query);
 
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- <style>
+        .page-item.active .page-link {
+            background-color: #5a5c69 !important;
+            color: white !important;
+            border-color: black !important;
+        }
+    </style> -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
@@ -131,30 +140,30 @@ $user = mysqli_fetch_assoc($query);
             <?php
             if ($user['level'] == 2 or $user['level'] == 3 or $_SESSION['login_type'] == 'nip') {
             ?>
-                <li class="nav-item <?= $halaman == 'penilaian-pegawai-tetap' || $halaman == 'tambah-penilaian-pegawai-tetap' || $halaman == 'detail-penilaian-pegawai-tetap' ? 'active' : '' ?>">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#penilaian" aria-expanded="true" aria-controls="penilaian">
+                <li class="nav-item <?= $halaman == 'penilaian-pegawai' || $halaman == 'detail-penilaian-pegawai' || $halaman == 'tambah-penilaian-pegawai' || $halaman == 'ubah-penilaian-pegawai' ? 'active' : '' ?>">
+                    <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#penilaian" aria-expanded="true" aria-controls="penilaian">
                         <i class="fas fa-fw fa-book"></i>
                         <span>Penilaian</span>
                     </a>
-                    <div id="penilaian" class="collapse <?= $halaman == 'penilaian-pegawai-tetap' || $halaman == 'tambah-penilaian-pegawai-tetap' || $halaman == 'detail-penilaian-pegawai-tetap' ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="penilaian" class="collapse <?= $halaman == 'penilaian-pegawai' || $halaman == 'tambah-penilaian-pegawai' || $halaman == 'detail-penilaian-pegawai' || $halaman == 'ubah-penilaian-pegawai' ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Penilaian:</h6>
-                            <a class="collapse-item <?= $halaman == 'penilaian-pegawai-tetap' || $halaman == 'tambah-penilaian-pegawai-tetap' || $halaman == 'detail-penilaian-pegawai-tetap' ? 'active' : '' ?>" href="index.php?halaman=penilaian-pegawai-tetap">Pegawai Tetap</a>
-                            <a class="collapse-item" href="index.php?halaman=penilaian-pegawai-kontrak">Pegawai Kontrak</a>
+                            <a class="collapse-item <?= ($halaman == 'penilaian-pegawai' && $status == 'tetap') || ($halaman == 'tambah-penilaian-pegawai' && $status == 'tetap') || ($halaman == 'detail-penilaian-pegawai'  && $status == 'tetap') || ($halaman == 'ubah-penilaian-pegawai'  && $status == 'tetap') ? 'active' : '' ?>" href="index.php?halaman=penilaian-pegawai&status=tetap">Pegawai Tetap</a>
+                            <a class="collapse-item  <?= ($halaman == 'penilaian-pegawai' && $status == 'kontrak') || ($halaman == 'tambah-penilaian-pegawai' && $status == 'kontrak') || ($halaman == 'detail-penilaian-pegawai'  && $status == 'kontrak') || ($halaman == 'ubah-penilaian-pegawai'  && $status == 'kontrak') ? 'active' : '' ?>" href="index.php?halaman=penilaian-pegawai&status=kontrak">Pegawai Kontrak</a>
                         </div>
                     </div>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item <?= $halaman == 'hasil-penilaian-pegawai' ? 'active' : '' ?>">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#hasilPenilaian" aria-expanded="true" aria-controls="hasilPenilaian">
                         <i class="fas fa-fw fa-book"></i>
                         <span>Hasil Penilaian</span>
                     </a>
-                    <div id="hasilPenilaian" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="hasilPenilaian" class="collapse <?= $halaman == 'hasil-penilaian-pegawai' ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Hasil Penilaian:</h6>
-                            <a class="collapse-item" href="index.php?halaman=hasil-penilaian-pegawai-tetap">Pegawai Tetap</a>
-                            <a class="collapse-item" href="index.php?halaman=hasil-penilaian-pegawai-kontrak">Pegawai Kontrak</a>
+                            <a class="collapse-item <?= $halaman == 'hasil-penilaian-pegawai' && $status == 'tetap' ? 'active' : '' ?>" href="index.php?halaman=hasil-penilaian-pegawai&status=tetap">Pegawai Tetap</a>
+                            <a class="collapse-item <?= $halaman == 'hasil-penilaian-pegawai' && $status == 'kontrak' ? 'active' : '' ?>" href="index.php?halaman=hasil-penilaian-pegawai&status=kontrak">Pegawai Kontrak</a>
                         </div>
                     </div>
                 </li>
@@ -240,22 +249,10 @@ $user = mysqli_fetch_assoc($query);
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
+                                <!-- <div class="dropdown-divider"></div> -->
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Keluar
                                 </a>
                             </div>
                         </li>
@@ -290,14 +287,16 @@ $user = mysqli_fetch_assoc($query);
                         include './tambah_kriteria.php';
                     } else if ($halaman == 'ubah-kriteria') {
                         include './ubah_kriteria.php';
-                    } else if ($halaman == 'penilaian-pegawai-tetap') {
-                        include './penilaian_pegawai_tetap.php';
-                    } else if ($halaman == 'tambah-penilaian-pegawai-tetap') {
-                        include './tambah_penilaian_pegawai_tetap.php';
-                    } else if ($halaman == 'ubah-penilaian-pegawai-tetap') {
-                        include './ubah_penilaian_pegawai_tetap.php';
-                    } else if ($halaman == 'detail-penilaian-pegawai-tetap') {
-                        include './detail_penilaian_pegawai_tetap.php';
+                    } else if ($halaman == 'penilaian-pegawai') {
+                        include './penilaian_pegawai.php';
+                    } else if ($halaman == 'tambah-penilaian-pegawai') {
+                        include './tambah_penilaian_pegawai.php';
+                    } else if ($halaman == 'ubah-penilaian-pegawai') {
+                        include './ubah_penilaian_pegawai.php';
+                    } else if ($halaman == 'detail-penilaian-pegawai') {
+                        include './detail_penilaian_pegawai.php';
+                    } else if ($halaman == 'hasil-penilaian-pegawai') {
+                        include './hasil_penilaian_pegawai.php';
                     }
                     ?>
 
