@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 27 Jan 2023 pada 13.49
+-- Waktu pembuatan: 31 Jan 2023 pada 09.04
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.0.25
 
@@ -65,6 +65,34 @@ INSERT INTO `bobot` (`id_bobot`, `skala`, `keterangan`) VALUES
 (2, 4, 'Penting'),
 (3, 3, 'Cukup Penting'),
 (4, 2, 'Kurang Penting');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `detail_keputusan`
+--
+
+CREATE TABLE `detail_keputusan` (
+  `id` int(11) NOT NULL,
+  `id_keputusan` int(11) NOT NULL,
+  `nip` varchar(16) NOT NULL,
+  `vektor_v` double NOT NULL,
+  `vektor_s` double NOT NULL,
+  `keputusan` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `detail_keputusan`
+--
+
+INSERT INTO `detail_keputusan` (`id`, `id_keputusan`, `nip`, `vektor_v`, `vektor_s`, `keputusan`) VALUES
+(21, 3, '10118101', 78.609893514361, 0.21427760247872, 'Bonus'),
+(22, 3, '10118100', 77.034096032658, 0.20998223848221, '-'),
+(23, 3, '10118103', 71.156576140585, 0.19396108879366, '-'),
+(24, 3, '10118102', 70.029745784988, 0.1908895351227, '-'),
+(25, 3, '10118104', 70.029745784988, 0.1908895351227, '-'),
+(26, 4, '10118105', 80.177266568538, 0.52954536186527, 'Perpanjang'),
+(27, 4, '10118106', 71.230473622259, 0.47045463813473, 'Stop Kontrak');
 
 -- --------------------------------------------------------
 
@@ -138,7 +166,47 @@ INSERT INTO `detail_penilaian` (`id`, `id_penilaian`, `id_kriteria`, `nilai`, `k
 (141, 16, 'K6', 80, ''),
 (142, 16, 'K7', 80, ''),
 (143, 16, 'K8', 80, ''),
-(144, 16, 'K9', 80, '');
+(144, 16, 'K9', 80, ''),
+(145, 17, 'K1', 70, ''),
+(146, 17, 'K2', 70, ''),
+(147, 17, 'K3', 70, ''),
+(148, 17, 'K4', 70, ''),
+(149, 17, 'K5', 70, ''),
+(150, 17, 'K6', 70, ''),
+(151, 17, 'K7', 70, ''),
+(152, 17, 'K8', 70, ''),
+(153, 17, 'K9', 70, ''),
+(154, 18, 'K1', 70, ''),
+(155, 18, 'K2', 70, ''),
+(156, 18, 'K3', 70, ''),
+(157, 18, 'K4', 70, ''),
+(158, 18, 'K5', 70, ''),
+(159, 18, 'K6', 70, ''),
+(160, 18, 'K7', 70, ''),
+(161, 18, 'K8', 70, ''),
+(162, 18, 'K9', 70, '');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `keputusan`
+--
+
+CREATE TABLE `keputusan` (
+  `id` int(11) NOT NULL,
+  `id_bagian` int(11) NOT NULL,
+  `status` varchar(12) NOT NULL,
+  `tahun` int(11) NOT NULL,
+  `tanggal` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `keputusan`
+--
+
+INSERT INTO `keputusan` (`id`, `id_bagian`, `status`, `tahun`, `tanggal`) VALUES
+(3, 3, 'tetap', 2022, '2023-01-31 05:13:41'),
+(4, 3, 'kontrak', 2022, '2023-01-31 09:04:18');
 
 -- --------------------------------------------------------
 
@@ -236,7 +304,9 @@ INSERT INTO `penilaian` (`id_penilaian`, `nip`, `periode`, `tahun`, `username`, 
 (11, '10118106', 'Desember', 2022, 'rosnilawati', '2022-12-18 12:56:28', 'baik hati'),
 (14, '10118102', 'Desember', 2022, 'rosnilawati', '2022-12-22 23:55:56', ''),
 (15, '10118103', 'Desember', 2022, 'rosnilawati', '2022-12-23 00:01:08', ''),
-(16, '10118105', 'Desember', 2022, 'rosnilawati', '2022-12-24 01:34:29', '');
+(16, '10118105', 'Desember', 2022, 'rosnilawati', '2022-12-24 01:34:29', ''),
+(17, '10118100', 'Januari', 2023, 'rosnilawati', '2023-01-28 15:26:04', ''),
+(18, '10118104', 'Desember', 2022, 'rosnilawati', '2023-01-30 13:49:14', '');
 
 -- --------------------------------------------------------
 
@@ -263,7 +333,7 @@ CREATE TABLE `user` (
   `nama` varchar(50) NOT NULL,
   `username` varchar(12) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `level` int(11) NOT NULL,
+  `role` varchar(25) NOT NULL,
   `id_bagian` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -271,9 +341,10 @@ CREATE TABLE `user` (
 -- Dumping data untuk tabel `user`
 --
 
-INSERT INTO `user` (`id`, `nama`, `username`, `password`, `level`, `id_bagian`) VALUES
-(1, 'Admin', 'admin', '26875f4883b3e7df8060324368567b4a', 1, 6),
-(3, 'Rosnilawati, A.Md. Kep', 'rosnilawati', '1ffac1ad766f0936332e8d72f286f4a0', 3, 3);
+INSERT INTO `user` (`id`, `nama`, `username`, `password`, `role`, `id_bagian`) VALUES
+(1, 'Admin', 'admin', '26875f4883b3e7df8060324368567b4a', 'admin', 6),
+(3, 'Rosnilawati, A.Md. Kep', 'rosnilawati', '1ffac1ad766f0936332e8d72f286f4a0', 'kabag', 3),
+(4, 'Albert Rotinaluhu', 'albert', '6c5bc43b443975b806740d8e41146479', 'kabag', 5);
 
 -- --------------------------------------------------------
 
@@ -310,12 +381,27 @@ ALTER TABLE `bobot`
   ADD PRIMARY KEY (`id_bobot`);
 
 --
+-- Indeks untuk tabel `detail_keputusan`
+--
+ALTER TABLE `detail_keputusan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_keputusan` (`id_keputusan`),
+  ADD KEY `nip` (`nip`);
+
+--
 -- Indeks untuk tabel `detail_penilaian`
 --
 ALTER TABLE `detail_penilaian`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_penilaian` (`id_penilaian`),
   ADD KEY `id_kriteria` (`id_kriteria`);
+
+--
+-- Indeks untuk tabel `keputusan`
+--
+ALTER TABLE `keputusan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_bagian` (`id_bagian`);
 
 --
 -- Indeks untuk tabel `kriteria`
@@ -364,26 +450,45 @@ ALTER TABLE `bobot`
   MODIFY `id_bobot` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT untuk tabel `detail_keputusan`
+--
+ALTER TABLE `detail_keputusan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
 -- AUTO_INCREMENT untuk tabel `detail_penilaian`
 --
 ALTER TABLE `detail_penilaian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+
+--
+-- AUTO_INCREMENT untuk tabel `keputusan`
+--
+ALTER TABLE `keputusan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `penilaian`
 --
 ALTER TABLE `penilaian`
-  MODIFY `id_penilaian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_penilaian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
+
+--
+-- Ketidakleluasaan untuk tabel `detail_keputusan`
+--
+ALTER TABLE `detail_keputusan`
+  ADD CONSTRAINT `detail_keputusan_ibfk_1` FOREIGN KEY (`id_keputusan`) REFERENCES `keputusan` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `detail_keputusan_ibfk_2` FOREIGN KEY (`nip`) REFERENCES `pegawai` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `detail_penilaian`
@@ -391,6 +496,12 @@ ALTER TABLE `user`
 ALTER TABLE `detail_penilaian`
   ADD CONSTRAINT `detail_penilaian_ibfk_1` FOREIGN KEY (`id_penilaian`) REFERENCES `penilaian` (`id_penilaian`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `detail_penilaian_ibfk_2` FOREIGN KEY (`id_kriteria`) REFERENCES `kriteria` (`id_kriteria`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `keputusan`
+--
+ALTER TABLE `keputusan`
+  ADD CONSTRAINT `keputusan_ibfk_1` FOREIGN KEY (`id_bagian`) REFERENCES `bagian` (`id_bagian`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `kriteria`
