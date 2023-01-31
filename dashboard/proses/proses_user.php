@@ -7,7 +7,8 @@ if ($_GET['aksi'] == 'tambah') {
     $nama = $_POST['nama'];
     $username = $_POST['username'];
     $password = md5($_POST['password']);
-    $level = $_POST['level'];
+    $role = $_POST['role'];
+    $bagian = isset($_POST['bagian']) ? $_POST['bagian'] : 6;
 
     $query = mysqli_query($koneksi, "SELECT*FROM user WHERE username='$username'");
     $check = mysqli_num_rows($query);
@@ -19,7 +20,7 @@ if ($_GET['aksi'] == 'tambah') {
         exit();
     }
 
-    $query = mysqli_query($koneksi, "INSERT INTO user (nama, username, password, level) VALUES ('$nama', '$username', '$password', '$level')");
+    $query = mysqli_query($koneksi, "INSERT INTO user (nama, username, password, role, id_bagian) VALUES ('$nama', '$username', '$password', '$role', '$bagian')");
     if ($query) {
         $_SESSION['toast_type'] = 'success';
         $_SESSION['toast_message'] = 'Tambah data user berhasil.';
@@ -33,13 +34,14 @@ if ($_GET['aksi'] == 'tambah') {
 if ($_GET['aksi'] == 'ubah') {
     $nama = $_POST['nama'];
     $username = $_POST['username'];
-    $level = $_POST['level'];
+    $role = $_POST['role'];
+    $bagian = isset($_POST['bagian']) ? $_POST['bagian'] : 6;
 
     $query = mysqli_query($koneksi, "SELECT*FROM user where username='$username'");
     $data = mysqli_fetch_assoc($query);
     $password = $_POST['password'] ? md5($_POST['password']) : $data['password'];
 
-    $query = mysqli_query($koneksi, "UPDATE user SET nama='$nama', password='$password', level='$level' WHERE username='$username'");
+    $query = mysqli_query($koneksi, "UPDATE user SET nama='$nama', password='$password', role='$role', id_bagian='$bagian' WHERE username='$username'");
     if ($query) {
         $_SESSION['toast_type'] = 'success';
         $_SESSION['toast_message'] = 'Ubah data user berhasil.';

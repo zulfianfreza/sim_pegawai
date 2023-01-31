@@ -138,7 +138,7 @@ $user = mysqli_fetch_assoc($query);
             </li> -->
 
             <?php
-            if ($user['level'] == 2 or $user['level'] == 3 or $_SESSION['login_type'] == 'nip') {
+            if ($user['role'] == 'kabag' or $_SESSION['login_type'] == 'nip') {
             ?>
                 <li class="nav-item <?= $halaman == 'penilaian-pegawai' || $halaman == 'detail-penilaian-pegawai' || $halaman == 'tambah-penilaian-pegawai' || $halaman == 'ubah-penilaian-pegawai' ? 'active' : '' ?>">
                     <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#penilaian" aria-expanded="true" aria-controls="penilaian">
@@ -153,31 +153,57 @@ $user = mysqli_fetch_assoc($query);
                         </div>
                     </div>
                 </li>
+                <?php
+                if ($user['id_bagian'] == 5) {
+                ?>
 
-                <li class="nav-item <?= $halaman == 'hasil-penilaian-pegawai' ? 'active' : '' ?>">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#hasilPenilaian" aria-expanded="true" aria-controls="hasilPenilaian">
-                        <i class="fas fa-fw fa-book"></i>
-                        <span>Hasil Penilaian</span>
-                    </a>
-                    <div id="hasilPenilaian" class="collapse <?= $halaman == 'hasil-penilaian-pegawai' ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Hasil Penilaian:</h6>
-                            <a class="collapse-item <?= $halaman == 'hasil-penilaian-pegawai' && $status == 'tetap' ? 'active' : '' ?>" href="index.php?halaman=hasil-penilaian-pegawai&status=tetap">Pegawai Tetap</a>
-                            <a class="collapse-item <?= $halaman == 'hasil-penilaian-pegawai' && $status == 'kontrak' ? 'active' : '' ?>" href="index.php?halaman=hasil-penilaian-pegawai&status=kontrak">Pegawai Kontrak</a>
+                    <li class="nav-item <?= $halaman == 'hasil-penilaian-pegawai' ? 'active' : '' ?>">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#hasilPenilaian" aria-expanded="true" aria-controls="hasilPenilaian">
+                            <i class="fas fa-fw fa-book"></i>
+                            <span>Hasil Penilaian</span>
+                        </a>
+                        <div id="hasilPenilaian" class="collapse <?= $halaman == 'hasil-penilaian-pegawai' ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <h6 class="collapse-header">Hasil Penilaian:</h6>
+                                <a class="collapse-item <?= $halaman == 'hasil-penilaian-pegawai' && $status == 'tetap' ? 'active' : '' ?>" href="index.php?halaman=hasil-penilaian-pegawai&status=tetap">Pegawai Tetap</a>
+                                <a class="collapse-item <?= $halaman == 'hasil-penilaian-pegawai' && $status == 'kontrak' ? 'active' : '' ?>" href="index.php?halaman=hasil-penilaian-pegawai&status=kontrak">Pegawai Kontrak</a>
+                            </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#keputusan" aria-expanded="true" aria-controls="keputusan">
+                    <li class="nav-item <?= $halaman == 'keputusan-pegawai' ? 'active' : '' ?>">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#keputusan" aria-expanded="true" aria-controls="keputusan">
+                            <i class="fas fa-fw fa-book"></i>
+                            <span>Keputusan</span>
+                        </a>
+                        <div id="keputusan" class="collapse <?= $halaman == 'keputusan-pegawai' ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <h6 class="collapse-header">Keputusan:</h6>
+                                <a class="collapse-item <?= $halaman == 'keputusan-pegawai' && $status == 'tetap' ? 'active' : '' ?>" href="index.php?halaman=keputusan-pegawai&status=tetap">Pegawai Tetap</a>
+                                <a class="collapse-item <?= $halaman == 'keputusan-pegawai' && $status == 'kontrak' ? 'active' : '' ?>" href="index.php?halaman=keputusan-pegawai&status=kontrak">Pegawai Kontrak</a>
+                            </div>
+                        </div>
+                    </li>
+                <?php
+                }
+                ?>
+            <?php
+            }
+            ?>
+
+            <?php
+            if ($user['role'] != 'admin' or $_SESSION['login_type'] == 'nip') {
+            ?>
+                <li class="nav-item <?= $halaman == 'hasil-keputusan-pegawai' ? 'active' : '' ?>">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#hasil-keputusan" aria-expanded="true" aria-controls="hasil-keputusan">
                         <i class="fas fa-fw fa-book"></i>
-                        <span>Keputusan</span>
+                        <span>Hasil Keputusan</span>
                     </a>
-                    <div id="keputusan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="hasil-keputusan" class="collapse <?= $halaman == 'hasil-keputusan-pegawai' ? 'show' : '' ?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Keputusan:</h6>
-                            <a class="collapse-item" href="index.php?halaman=keputusan-pegawai-tetap">Pegawai Tetap</a>
-                            <a class="collapse-item" href="index.php?halaman=keputusan-pegawai-kontrak">Pegawai Kontrak</a>
+                            <h6 class="collapse-header">Hasil Keputusan:</h6>
+                            <a class="collapse-item <?= $halaman == 'hasil-keputusan-pegawai' && $status == 'tetap' ? 'active' : '' ?>" href="index.php?halaman=hasil-keputusan-pegawai&status=tetap">Pegawai Tetap</a>
+                            <a class="collapse-item <?= $halaman == 'hasil-keputusan-pegawai' && $status == 'kontrak' ? 'active' : '' ?>" href="index.php?halaman=hasil-keputusan-pegawai&status=kontrak">Pegawai Kontrak</a>
                         </div>
                     </div>
                 </li>
@@ -186,7 +212,7 @@ $user = mysqli_fetch_assoc($query);
             ?>
 
             <?php
-            if ($user['level'] == 1) {
+            if ($user['role'] == 'admin' or $user['id_bagian'] == 5) {
 
             ?>
                 <li class="nav-item <?= $halaman == 'kriteria' || $halaman == 'tambah-kriteria' || $halaman == 'ubah-kriteria' ? 'active' : '' ?>">
@@ -296,7 +322,11 @@ $user = mysqli_fetch_assoc($query);
                     } else if ($halaman == 'detail-penilaian-pegawai') {
                         include './detail_penilaian_pegawai.php';
                     } else if ($halaman == 'hasil-penilaian-pegawai') {
-                        include './hasil_penilaian_pegawai.php';
+                        include './hasil_penilaian_pegawai2.php';
+                    } else if ($halaman == 'keputusan-pegawai') {
+                        include './keputusan_pegawai.php';
+                    } else if ($halaman == 'hasil-keputusan-pegawai') {
+                        include './hasil_keputusan_pegawai.php';
                     }
                     ?>
 

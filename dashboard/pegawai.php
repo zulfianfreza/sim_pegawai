@@ -6,7 +6,7 @@
     <div class="card-header py-3 d-flex align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold">Data Pegawai</h6>
         <?php
-        if ($user['level'] == 1) {
+        if ($user['role'] == 'admin') {
         ?>
             <a href="index.php?halaman=tambah-pegawai" class="btn btn-success">
                 <i class="fas fa-plus"></i> Tambah
@@ -35,7 +35,8 @@
                 <tbody>
                     <?php
                     $no = 1;
-                    $query = mysqli_query($koneksi, "SELECT*FROM pegawai JOIN bagian ON pegawai.id_bagian = bagian.id_bagian");
+                    $string = $user['role'] == 'admin' ? "SELECT*FROM pegawai JOIN bagian ON pegawai.id_bagian = bagian.id_bagian" : "SELECT*FROM pegawai JOIN bagian ON pegawai.id_bagian = bagian.id_bagian WHERE pegawai.id_bagian='$user[id_bagian]'";
+                    $query = mysqli_query($koneksi, $string);
                     while ($data = mysqli_fetch_assoc($query)) {
                     ?>
                         <tr>
@@ -49,7 +50,7 @@
                             <td><?= $data['nama_bagian'] ?></td>
                             <td>
                                 <?php
-                                if ($user['level'] == 1) {
+                                if ($user['role'] == 'admin') {
                                 ?>
                                     <a href="index.php?halaman=ubah-pegawai&nip=<?= $data['nip'] ?>">
                                         <button class="btn btn-warning btn-sm"><i class="fa fa-pencil-alt"></i></button>

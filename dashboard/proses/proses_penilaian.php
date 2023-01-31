@@ -15,6 +15,8 @@ if ($_GET['aksi'] == 'tambah') {
 
     $query = mysqli_query($koneksi, "SELECT*FROM penilaian JOIN pegawai ON penilaian.nip = pegawai.nip WHERE penilaian.nip='$nip' AND penilaian.periode='$periode' AND penilaian.tahun='$tahun'");
     $check = mysqli_num_rows($query);
+    $data = mysqli_fetch_assoc($query);
+    $status = strtolower($data['status']);
 
     if ($check > 0) {
         $_SESSION['toast_type'] = 'error';

@@ -85,7 +85,7 @@ $status = $_GET['status'];
                     $query = mysqli_query($koneksi, "SELECT*FROM penilaian JOIN pegawai ON penilaian.nip = pegawai.nip JOIN user ON penilaian.username = user.username WHERE pegawai.status='$status' AND pegawai.id_bagian='$user[id_bagian]' AND penilaian.periode='$periode' AND penilaian.tahun='$tahun'");
                     while ($data = mysqli_fetch_assoc($query)) {
                     ?>
-                        <tr>
+                        <tr class="<?= $data['nip'] == $user['nip'] ? 'bg-success text-light' : '' ?>">
                             <td><?= $no++ ?></td>
                             <td><?= $data['nip'] ?></td>
                             <td><?= $data['nama_pegawai'] ?></td>

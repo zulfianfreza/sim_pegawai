@@ -25,11 +25,24 @@ $data = mysqli_fetch_assoc($query);
                 <small id="emailHelp" class="form-text text-muted">Isi password jika akan dirubah, biarkan tetap kosong jika tidak ada perubahan.</small>
             </div>
             <div class="form-group">
-                <label class="form-label">Level</label>
-                <select name="level" id="" class="form-control">
-                    <option value="" disabled>1 - Admin</option>
-                    <option value="2" <?= $data['level'] == 2 ? 'selected' : '' ?>>2 - Kepala Bagian Umum & SDM</option>
-                    <option value="3" <?= $data['level'] == 3 ? 'selected' : '' ?>>3 - Kepala Bagian</option>
+                <label class="form-label">Role</label>
+                <select name="role" id="" class="form-control" onchange="showBagian(this)">
+                    <option value="admin" <?= $data['role'] == 'admin' ? 'selected' : '' ?>>admin</option>
+                    <option value="kabag" <?= $data['role'] == 'kabag' ? 'selected' : '' ?>>kabag</option>
+                </select>
+            </div>
+            <div class="form-group" id="bagian" style="display: <?= $data['role'] == 'admin' ? 'none' : 'block' ?>;">
+                <label class="form-label">Bagian</label>
+                <select name="bagian" id="" class="form-control">
+                    <option value="" selected disabled>Bagian</option>
+                    <?php
+                    $query = mysqli_query($koneksi, "SELECT*FROM bagian WHERE id_bagian !=6");
+                    while ($res = mysqli_fetch_assoc($query)) {
+                    ?>
+                        <option value="<?= $res['id_bagian'] ?>" <?= $res['id_bagian'] == $data['id_bagian'] ? 'selected' : '' ?>><?= $res['nama_bagian'] ?></option>
+                    <?php
+                    }
+                    ?>
                 </select>
             </div>
         </div>
@@ -40,3 +53,9 @@ $data = mysqli_fetch_assoc($query);
         </div>
     </form>
 </div>
+
+<script>
+    function showBagian(element) {
+        document.getElementById('bagian').style.display = element.value == 'admin' ? 'none' : 'block'
+    }
+</script>

@@ -19,20 +19,22 @@
                         <th>Nama</th>
                         <th>Username</th>
                         <th>Role</th>
+                        <th>Bagian</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     $no = 1;
-                    $query = mysqli_query($koneksi, "SELECT*FROM user");
+                    $query = mysqli_query($koneksi, "SELECT*FROM user JOIN bagian ON user.id_bagian = bagian.id_bagian");
                     while ($data = mysqli_fetch_assoc($query)) {
                     ?>
                         <tr>
                             <td><?= $no++ ?></td>
                             <td><?= $data['nama'] ?></td>
                             <td><?= $data['username'] ?></td>
-                            <td><?= $data['level'] == 1 ? 'Admin' : ($data['level'] == 2 ? 'Kepala Bagian Umum & SDM' : 'Kepala Bagian') ?></td>
+                            <td><?= $data['role'] ?></td>
+                            <td><?= $data['id_bagian'] == '6' ? '' : $data['nama_bagian'] ?></td>
                             <td>
                                 <?php
                                 if ($data['level'] != 1) {
