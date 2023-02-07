@@ -96,7 +96,7 @@ $tahun = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
                             <th>Nilai Vektor V</th>
                             <th>Nilai Vektor S</th>
                             <th>Peringkat</th>
-                            <th></th>
+                            <th>Keputusan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -125,6 +125,8 @@ $tahun = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
                                         <?php
                                         if ($status == 'kontrak') {
                                         ?>
+                                            <option value="-">-</option>
+                                            <option value="Pengangkatan Status">Pengangkatan Status</option>
                                             <option value="Perpanjang">Perpanjang</option>
                                             <option value="Stop Kontrak">Stop Kontrak</option>
                                         <?php
@@ -132,6 +134,7 @@ $tahun = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
                                         ?>
                                             <option value="-">-</option>
                                             <option value="Bonus">Bonus</option>
+                                            <option value="Pengankatan Jabatan">Pengangkatan Jabatan</option>
                                         <?php
                                         }
                                         ?>

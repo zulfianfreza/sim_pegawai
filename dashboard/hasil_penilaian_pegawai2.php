@@ -130,9 +130,9 @@ $tahun = isset($_GET['tahun']) ? $_GET['tahun'] : date('Y');
                                 $vektorv_temp = $vektorv_temp * $v;
                             }
                             $check = mysqli_num_rows($query2);
-                            $vektorv = $check == 0 ? 0 : $vektorv_temp;
+                            $vektorv = $vektorv_temp;
                             $vektors = $vektors + $vektorv;
-                            array_push($data_vektorv, $check == 0 ? 0 : $vektorv_temp);
+                            array_push($data_vektorv, $vektorv_temp);
                             array_push($data_nip, $data['nip']);
                             array_push($data_nama, $data['nama_pegawai']);
                             ?>
